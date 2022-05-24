@@ -15,18 +15,19 @@
       class="col s8"
       type="text"
       placeholder="Dodaj zadanie i datę wykonania"
-      #nameInput
+      [(ngModel)]="taskName"
     />
     <input
       class="col s2 disabled"
       type="date"
-      #dateInput
+      [(ngModel)]="taskDate"
     />
     <button
       class="btn-floating"
-      (click)="createTask(nameInput.value, dateInput.value);
-       nameInput.value='';
-       dateInput.value=''"
+      (click)="createTask();
+       taskDate ='';
+       taskName =''"
+       [disabled]="taskName === ''|| taskDate === ''"
     >
       +
     </button>
@@ -51,7 +52,7 @@
 
   <h1>Dzisiaj brak zadań :-)</h1>
 
-  <button class="btn red" (click)="clearTasks()">Wyczyść</button>
+  <button class="btn red" (click)="clearTasks()" [disabled]="tasks.length === 0">Wyczyść</button>
 
   <footer class="page-footer mt-5">
     <div class="footer-copyright">
