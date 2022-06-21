@@ -9,6 +9,7 @@ import { Task } from './task';
 export class AppComponent {
   taskName = '';
   taskDate = '';
+  editMode = false;
   config: { [key: string]: string } | null = null;
   tasks: Task[] = [
     {
@@ -19,7 +20,7 @@ export class AppComponent {
     {
       name: 'Nauka Angulara',
       deadline: '2020-01-03',
-      done: false,
+      done: true,
     },
     {
       name: 'Sprzątanie kuwety',
@@ -34,6 +35,7 @@ export class AppComponent {
       footer:  '© Lista zadań. All rights reserved.',
       date: new Date().toDateString()
     };
+    this.sortTasks();
   }
 
   clearTasks() {
@@ -50,5 +52,27 @@ export class AppComponent {
     this.tasks.push(task);
     this.taskName = '';
     this.taskDate = ''
+    this.sortTasks();
+  }
+
+  switchEditMode(){
+    this.editMode = !this.editMode;
+  }
+
+  markTaskAsDone(task: Task){
+    task.done = true;
+    this.sortTasks();
+  }
+
+  deleteTask(task: Task){
+    this.tasks = this.tasks.filter(e => e !== task);
+    this.sortTasks();
+  }
+
+  private sortTasks(){
+    this.tasks = this.tasks.sort((a: Task, b: Task) =>
+    a.done === b.done ? 0 : a.done ? 1 : -1
+    )
   }
 }
+//(a: Task, b: Task) => a.done === b.done ? 0 : a.done ? 1 | -1
